@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"log"
 	"net/http"
 
@@ -16,19 +17,21 @@ type hello struct {
 
 // The Render method is where the component appearance is defined. Here, a
 // markdown file is displayed as content.
+//
+//go:embed documents/entry1.md
+var entry1Content string
+
 func (h *hello) Render() app.UI {
 	return newPage().
 		Title("Introduction To Blogging").
 		Icon(rocketSVG).
 		Index(
 			newIndexLink().Title("Intro"),
-
 			app.Div().Class("separator"),
-
 			newIndexLink().Title("Next"),
 		).
 		Content(
-			newRemoteMarkdownDoc().Src("/web/documents/entry1.md"),
+			newMarkdownDoc().MD(entry1Content), // Use embedded content directly
 		)
 }
 
