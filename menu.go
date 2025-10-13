@@ -185,22 +185,6 @@ func (m *menu) Render() app.UI {
 
 				app.Div().Class("separator"),
 
-				ui.Link().
-					Class(linkClass).
-					Icon(twitterSVG).
-					Label("Twitter").
-					Href(twitterURL),
-				ui.Link().
-					Class(linkClass).
-					Icon(githubSVG).
-					Label("GitHub").
-					Href(githubURL),
-				ui.Link().
-					Class(linkClass).
-					Icon(opensourceSVG).
-					Label("Open Collective").
-					Href(openCollectiveURL),
-
 				app.Div().Class("separator"),
 
 				app.If(m.appInstallable, func() app.UI {

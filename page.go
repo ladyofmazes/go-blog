@@ -165,47 +165,15 @@ func (p *page) Render() app.UI {
 									app.A().
 										Href(fmt.Sprintf(
 											"%s/issues/new?title=Documentation issue in %s page",
-											githubURL,
+											"",
 											p.Ititle,
 										)).
 										Text("🚀 Submit a GitHub issue!"),
 								),
 							),
 							app.Div().Class("separator"),
-
-							// Testing space
-							// app.H2().Text("Test"),
-							// app.Form().
-							// 	Method("post").
-							// 	Action("http://localhost:9600/api/test").
-							// 	EncType("multipart/form-data").
-							// 	Body(
-							// 		app.Input().Placeholder("What is your first name?").AutoFocus(true),
-							// 		app.Input().Placeholder("What is your last name?"),
-							// 		app.Input().Type("submit").Value("Submit"),
-							// 	),
 						),
 					),
-				),
-		).
-		Ads(
-			ui.Flyer().
-				Class("fill").
-				HeaderHeight(headerHeight).
-				Banner(
-					app.Aside().
-						Class("fill").
-						Body(
-							ui.AdsenseDisplay().
-								Class("fill").
-								Class("no-scroll").
-								Client(adsenseClient).
-								Slot(adsenseSlot),
-						),
-				).
-				PremiumHeight(200).
-				Premium(
-					newGithubSponsor().Class("fill"),
 				),
 		)
 }
