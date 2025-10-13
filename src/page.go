@@ -157,7 +157,7 @@ func (p *page) Render() app.UI {
 								app.Header().
 									ID("report-an-issue").
 									Class("h2").
-									Text("Report an issue"),
+									Text(""),
 								app.P().Body(
 									app.Text("For more fun with me: "),
 									app.A().

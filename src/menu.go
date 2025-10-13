@@ -79,6 +79,22 @@ func (m *menu) Render() app.UI {
 					Class(isFocus("/static-resources")),
 
 				app.Div().Class("separator"),
+
+				app.If(m.appInstallable, func() app.UI {
+					return ui.Link().
+						Class(linkClass).
+						Icon(downloadSVG).
+						Label("Install").
+						OnClick(m.installApp)
+				}),
+				ui.Link().
+					Class(linkClass).
+					Icon(userLockSVG).
+					Label("Privacy Policy").
+					Href("/privacy-policy").
+					Class(isFocus("/privacy-policy")),
+
+				app.Div().Class("separator"),
 			),
 		)
 }

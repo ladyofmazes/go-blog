@@ -19,6 +19,14 @@ type hello struct {
 func (h *hello) Render() app.UI {
 	return newPage().
 		Title("Introduction To Blogging").
+		Icon(rocketSVG).
+		Index(
+			newIndexLink().Title("Intro"),
+
+			app.Div().Class("separator"),
+
+			newIndexLink().Title("Next"),
+		).
 		Content(
 			newRemoteMarkdownDoc().Src("/web/documents/entry1.md"),
 		)
