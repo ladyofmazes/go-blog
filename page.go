@@ -161,11 +161,11 @@ func (p *page) Render() app.UI {
 									Class("h2").
 									Text("Report an issue"),
 								app.P().Body(
-									app.Text("Found something incorrect, a typo or have suggestions to improve this page? "),
+									app.Text("For more fun with me: "),
 									app.A().
 										Href(fmt.Sprintf(
-											"%s/issues/new?title=Documentation issue in %s page",
 											"",
+											"https://github.com/ladyofmazes",
 											p.Ititle,
 										)).
 										Text("🚀 Submit a GitHub issue!"),
