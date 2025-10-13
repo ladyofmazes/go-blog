@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/maxence-charriere/go-app/v10/pkg/app"
 	"github.com/maxence-charriere/go-app/v10/pkg/ui"
 )
@@ -163,12 +161,8 @@ func (p *page) Render() app.UI {
 								app.P().Body(
 									app.Text("For more fun with me: "),
 									app.A().
-										Href(fmt.Sprintf(
-											"",
-											"https://github.com/ladyofmazes",
-											p.Ititle,
-										)).
-										Text("🚀 Submit a GitHub issue!"),
+										Href("https://github.com/ladyofmazes").
+										Text("🚀 Find me on Github!"),
 								),
 							),
 							app.Div().Class("separator"),

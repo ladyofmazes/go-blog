@@ -70,6 +70,15 @@ func (m *menu) Render() app.UI {
 					Class(isFocus("/")),
 
 				app.Div().Class("separator"),
+
+				ui.Link().
+					Class(linkClass).
+					Icon(imgFolderSVG).
+					Label("Images and Static Resources").
+					Href("/static-resources").
+					Class(isFocus("/static-resources")),
+
+				app.Div().Class("separator"),
 			),
 		)
 }

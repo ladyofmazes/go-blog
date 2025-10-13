@@ -20,7 +20,7 @@ func (h *hello) Render() app.UI {
 	return newPage().
 		Title("Introduction To Blogging").
 		Content(
-			newRemoteMarkdownDoc().Src("entry1.md"),
+			newRemoteMarkdownDoc().Src("/web/documents/entry1.md"),
 		)
 }
 
