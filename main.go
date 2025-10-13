@@ -15,9 +15,13 @@ type hello struct {
 }
 
 // The Render method is where the component appearance is defined. Here, a
-// "Hello World!" is displayed as a heading.
+// markdown file is displayed as content.
 func (h *hello) Render() app.UI {
-	return app.H1().Text("Hello World!")
+	return newPage().
+		Title("Introduction To Blogging").
+		Content(
+			newRemoteMarkdownDoc().Src("/web/documents/entry1.md"),
+		)
 }
 
 // The main function is the entry point where the app is configured and started.
