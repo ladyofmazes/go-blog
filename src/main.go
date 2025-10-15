@@ -67,6 +67,12 @@ func main() {
 	http.Handle("/", &app.Handler{
 		Name:        "Hello",
 		Description: "An Hello World! example",
+		Styles: []string{
+			// "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
+                        "/app.css",
+			"/web/css/prism.css",
+			"/web/css/docs.css",
+		},
 	})
 
 	if err := http.ListenAndServe(":8000", nil); err != nil {
