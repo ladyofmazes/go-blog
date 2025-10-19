@@ -422,21 +422,24 @@ strong {
 .separator:first-of-type,
 .reference .Documentation-overviewHeader {
   margin-top: 42px;
+  margin-bottom: 42px;
 }
 
 .separator:last-of-type {
   margin-top: 18px;
+  margin-bottom: 18px;
 }
 
 .separator,
 .markdown h2,
 .markdown h3,
 .reference h2 {
-  margin-top: 84px;
+  margin-top: 42px;
 }
 
 .markdown h2:first-of-type {
-  margin-top: 0;
+  margin-top: 42;
+  margin-bottom: 42;
 }
 
 /*------------------------------------------------------------------------------
@@ -631,7 +634,7 @@ strong {
 .markdown .title h1 {
   border: 0;
   margin: 0;
-  padding: 0;
+  padding: 10;
   margin-left: 12px;
   margin-right: 42px;
   font-size: 26px;
