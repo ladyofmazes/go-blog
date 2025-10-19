@@ -53,7 +53,7 @@ func (m *menu) Render() app.UI {
 						app.A().
 							Class("heading").
 							Class("app-title").
-							Href("/").
+							Href("https://go-app.dev/").
 							Text("Go-App"),
 					),
 				),
@@ -74,10 +74,30 @@ func (m *menu) Render() app.UI {
 				ui.Link().
 					Class(linkClass).
 					Icon(imgFolderSVG).
-					Label("Images and Static Resources").
-					Href("/static-resources").
-					Class(isFocus("/static-resources")),
-
+					Label("Intro").
+					Href("/intro").
+					Class(isFocus("/intro")),
+				app.Div().Class("separator"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Words").
+					Href("https://my-go-app-bvk.pages.dev/"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Destroy Math").
+					Href("https://destroy-math.pages.dev/"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Pieboy").
+					Href("https://pieboy.melamday.workers.dev/"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Hackrooms").
+					Href("https://hackrooms.pages.dev/"),
 				app.Div().Class("separator"),
 
 				app.If(m.appInstallable, func() app.UI {

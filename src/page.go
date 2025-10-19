@@ -159,9 +159,9 @@ func (p *page) Render() app.UI {
 									Class("h2").
 									Text(""),
 								app.P().Body(
-									app.Text("For more fun with me: "),
+									app.Text("For more fun with me or to report an issue: "),
 									app.A().
-										Href("https://github.com/ladyofmazes").
+										Href("https://github.com/ladyofmazes/go-blog").
 										Text("🚀 Find me on Github!"),
 								),
 							),

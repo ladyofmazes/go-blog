@@ -26,9 +26,8 @@ func (h *hello) Render() app.UI {
 		Title("Introduction To Blogging").
 		Icon(rocketSVG).
 		Index(
-			newIndexLink().Title("Intro"),
+			newIndexLink().Title("The Beginning").Href("/"),
 			app.Div().Class("separator"),
-			newIndexLink().Title("Next"),
 		).
 		Content(
 			newMarkdownDoc().MD(entry1Content), // Use embedded content directly
@@ -39,11 +38,12 @@ func (h *hello) Render() app.UI {
 // It is executed in 2 different environments: A client (the web browser) and a
 // server.
 func main() {
-	// The first thing to do is to associate the hello component with a path.
+	// The first thing to do is to associate the components with a path.
 	//
 	// This is done by calling the Route() function,  which tells go-app what
 	// component to display for a given path, on both client and server-side.
 	app.Route("/", func() app.Composer { return &hello{} })
+	app.Route("/intro", func() app.Composer { return &intro{} })
 
 	// Once the routes set up, the next thing to do is to either launch the app
 	// or the server that serves the app.
@@ -65,11 +65,22 @@ func main() {
 	// required resources to make it work into a web browser. Here it is
 	// configured to handle requests with a path that starts with "/".
 	http.Handle("/", &app.Handler{
-		Name:        "Hello",
-		Description: "An Hello World! example",
+		Name:        "Home",
+		Description: "Home Page",
 		Styles: []string{
 			// "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
-                        "/app.css",
+			"/app.css",
+			"/web/css/prism.css",
+			"/web/css/docs.css",
+		},
+	})
+
+	http.Handle("/intro", &app.Handler{
+		Name:        "Intro",
+		Description: "Introduction",
+		Styles: []string{
+			// "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
+			"/app.css",
 			"/web/css/prism.css",
 			"/web/css/docs.css",
 		},
