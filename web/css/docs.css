@@ -728,12 +728,21 @@ strong {
 // Hamburger Menu
 ------------------------------------------------------------------------------*/
 
-/* Hamburger button - hidden on desktop, visible on mobile */
+/* -----------------------------------------------------------------------------
+// Hamburger Menu
+------------------------------------------------------------------------------*/
+
+/* FORCE VISIBLE FOR DEBUGGING - outside media query */
 .hamburger-button {
-  display: none;
+  display: block !important;
   cursor: pointer;
   padding: 12px;
   color: white;
+  background: red;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
 }
 
 .hamburger-button svg {
@@ -743,23 +752,25 @@ strong {
 }
 
 @media (max-width: 768px) {
-  .hamburger-button {
-    display: block !important;
+
+  /* Hide desktop menu on mobile */
+  .ui-shell-menu {
+    display: none !important;
   }
 
-.hamburger-button {
-  display: block !important;
-  /* Force visible everywhere */
-  cursor: pointer;
-  padding: 12px;
-  color: white;
-  background: red;
-  /* Make it obvious for debugging */
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
-}
+  /* Show menu when open */
+  .ui-shell.menu-open .ui-shell-menu {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    z-index: 999;
+    overflow-y: auto;
+    background: linear-gradient(#2e343a, rgba(0, 0, 0, 0.9));
+  }
 
   /* Backdrop when menu is open */
   .ui-shell.menu-open::after {
