@@ -67,8 +67,6 @@ func (p *page) Render() app.UI {
 		shellClass = app.AppendClass(shellClass, "menu-open")
 	}
 	return ui.Shell().
-		Class("fill").
-		Class("background").
 		Class(shellClass). // Add class when open
 		Menu(
 			newMenu().Class("fill"),
