@@ -58,7 +58,13 @@ func (p *page) OnAppUpdate(ctx app.Context) {
 }
 
 func (p *page) toggleMenu(ctx app.Context, e app.Event) {
+	// Add logging
+	app.Window().Get("console").Call("log", "toggleMenu called!")
+	app.Window().Get("console").Call("log", "menuOpen was:", p.menuOpen)
+
 	p.menuOpen = !p.menuOpen
+
+	app.Window().Get("console").Call("log", "menuOpen now:", p.menuOpen)
 }
 
 func (p *page) Render() app.UI {
@@ -110,6 +116,7 @@ func (p *page) Render() app.UI {
 									app.Div().
 										Class("hamburger-button").
 										OnClick(p.toggleMenu).
+										OnMouseDown(p.toggleMenu).
 										Body(
 											app.Raw(`<svg viewBox="0 0 24 24" width="24" height="24">
                                                 <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
