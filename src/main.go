@@ -58,6 +58,11 @@ func main() {
 	// instructions.
 	app.RunWhenOnBrowser()
 
+	// Add this check - if we're in browser, block forever
+	if app.IsClient {
+		select {} // Block forever - prevent Go runtime from exiting
+	}
+
 	// Finally, launching the server that serves the app is done by using the Go
 	// standard HTTP package.
 	//
@@ -67,17 +72,6 @@ func main() {
 	http.Handle("/", &app.Handler{
 		Name:        "Home",
 		Description: "Home Page",
-		Styles: []string{
-			// "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
-			"/app.css",
-			"/web/css/prism.css",
-			"/web/css/docs.css",
-		},
-	})
-
-	http.Handle("/intro", &app.Handler{
-		Name:        "Intro",
-		Description: "Introduction",
 		Styles: []string{
 			// "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
 			"/app.css",
