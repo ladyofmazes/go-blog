@@ -58,13 +58,18 @@ func (p *page) OnAppUpdate(ctx app.Context) {
 }
 
 func (p *page) toggleMenu(ctx app.Context, e app.Event) {
-	// Add logging
-	app.Window().Get("console").Call("log", "toggleMenu called!")
-	app.Window().Get("console").Call("log", "menuOpen was:", p.menuOpen)
-
 	p.menuOpen = !p.menuOpen
 
 	app.Window().Get("console").Call("log", "menuOpen now:", p.menuOpen)
+
+	// Log what classes are on the shell element after update
+	ctx.Async(func() {
+		shell := app.Window().Get("document").Call("querySelector", ".ui-shell")
+		if shell.Truthy() {
+			classes := shell.Get("className").String()
+			app.Window().Get("console").Call("log", "Shell classes:", classes)
+		}
+	})
 }
 
 func (p *page) Render() app.UI {
