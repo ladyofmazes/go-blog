@@ -21,6 +21,7 @@ type page struct {
 	Icontent []app.UI
 
 	updateAvailable bool
+	menuOpen        bool // Add this
 }
 
 func newPage() *page {
@@ -56,21 +57,19 @@ func (p *page) OnAppUpdate(ctx app.Context) {
 	p.updateAvailable = ctx.AppUpdateAvailable()
 }
 
+func (p *page) toggleMenu(ctx app.Context, e app.Event) {
+	p.menuOpen = !p.menuOpen
+}
+
 func (p *page) Render() app.UI {
+	shellClass := app.AppendClass("fill", "background")
+	if p.menuOpen {
+		shellClass = app.AppendClass(shellClass, "menu-open")
+	}
 	return ui.Shell().
 		Class("fill").
 		Class("background").
-		HamburgerButton(app.Div().
-			Class("hamburger-menu-icon").
-			Body(app.Raw(`
-			<svg class="hamburger-menu-icon" viewBox="0 0 24 24">
-				<path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
-			</svg>`))).
-		HamburgerMenu(
-			newMenu().
-				Class("fill").
-				Class("menu-hamburger-background"),
-		).
+		Class(shellClass). // Add class when open
 		Menu(
 			newMenu().Class("fill"),
 		).
@@ -106,9 +105,19 @@ func (p *page) Render() app.UI {
 						Body(
 							ui.Stack().
 								Class("fill").
-								Right().
+								Left().
 								Middle().
 								Content(
+									// Manual hamburger button
+									app.Div().
+										Class("hamburger-button").
+										OnClick(p.toggleMenu).
+										Body(
+											app.Raw(`<svg viewBox="0 0 24 24" width="24" height="24">
+                                                <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+                                            </svg>`),
+										),
+
 									app.If(p.updateAvailable, func() app.UI {
 										return app.Div().
 											Class("link-update").
