@@ -60,22 +60,21 @@ func (p *page) OnAppUpdate(ctx app.Context) {
 func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 	p.menuOpen = !p.menuOpen
 
-	app.Window().Get("console").Call("log", "menuOpen now:", p.menuOpen)
-
-	// Log what classes are on the shell element after update
-	ctx.Async(func() {
-		shell := app.Window().Get("document").Call("querySelector", ".ui-shell")
-		if shell.Truthy() {
-			classes := shell.Get("className").String()
-			app.Window().Get("console").Call("log", "Shell classes:", classes)
+	shell := app.Window().Get("document").Call("querySelector", "[data-goapp-ui='shell']")
+	if shell.Truthy() {
+		if p.menuOpen {
+			shell.Get("classList").Call("add", "menu-open")
+		} else {
+			shell.Get("classList").Call("remove", "menu-open")
 		}
-	})
+	}
 }
 
 func (p *page) Render() app.UI {
 	shellClass := app.AppendClass("fill", "background")
 	if p.menuOpen {
 		shellClass = app.AppendClass(shellClass, "menu-open")
+		shellClass = app.AppendClass(shellClass, "test-menu-is-open") // Extra debug class
 	}
 	return ui.Shell().
 		Class(shellClass). // Add class when open

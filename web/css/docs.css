@@ -531,10 +531,6 @@ strong {
 }
 
 .updates .markdown tr:first-child td {
-  /* margin: 0;
-  padding: 12px 24px 12px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08); */
-  /* padding-top: 0; */
   border-top: none;
 }
 
@@ -728,21 +724,9 @@ strong {
 // Hamburger Menu
 ------------------------------------------------------------------------------*/
 
-/* -----------------------------------------------------------------------------
-// Hamburger Menu
-------------------------------------------------------------------------------*/
-
-/* FORCE VISIBLE FOR DEBUGGING - outside media query */
+/* Hamburger button - hide on desktop, show on mobile */
 .hamburger-button {
-  display: block !important;
-  cursor: pointer;
-  padding: 12px;
-  color: white;
-  background: red;
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
+  display: none;
 }
 
 .hamburger-button svg {
@@ -753,14 +737,19 @@ strong {
 
 @media (max-width: 768px) {
 
-  /* Hide desktop menu on mobile */
-  .ui-shell-menu {
-    display: none !important;
+  /* Show hamburger button on mobile */
+  .hamburger-button {
+    display: block !important;
+    cursor: pointer;
+    padding: 12px;
+    color: white;
+    position: relative;
+    z-index: 1000;
   }
 
-  /* Show menu when open */
-  .ui-shell.menu-open .ui-shell-menu {
-    display: block !important;
+  /* Hide desktop menu by default on mobile */
+  .menu {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -770,10 +759,18 @@ strong {
     z-index: 999;
     overflow-y: auto;
     background: linear-gradient(#2e343a, rgba(0, 0, 0, 0.9));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
 
-  /* Backdrop when menu is open */
-  .ui-shell.menu-open::after {
+  /* Show menu when shell has menu-open class */
+  [data-goapp-ui="shell"].menu-open .menu {
+    display: block;
+    transform: translateX(0);
+  }
+
+  /* Backdrop */
+  [data-goapp-ui="shell"].menu-open::after {
     content: '';
     position: fixed;
     top: 0;
@@ -783,6 +780,7 @@ strong {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 998;
   }
+
 }
 
 /*------------------------------------------------------------------------------
@@ -792,6 +790,7 @@ strong {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -801,18 +800,23 @@ strong {
   0% {
     transform: translateY(0);
   }
+
   10% {
     transform: translateY(-6px);
   }
+
   30% {
     transform: translateY(0);
   }
+
   35% {
     transform: translateY(-6px);
   }
+
   55% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(0);
   }
