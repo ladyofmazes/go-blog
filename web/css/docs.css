@@ -749,6 +749,10 @@ strong {
     top: 10px;
     left: 10px;
     z-index: 9999;
+    pointer-events: auto !important;
+    /* Ensure it receives clicks */
+    touch-action: manipulation;
+    /* Better touch handling */
   }
 
   /* Hide desktop menu by default on mobile */

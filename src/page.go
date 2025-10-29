@@ -136,6 +136,10 @@ func (p *page) Render() app.UI {
 									app.Div().
 										Class("hamburger-button").
 										OnClick(p.toggleMenu).
+										OnDblClick(p.toggleMenu).
+										OnChange(p.toggleMenu).
+										OnKeyPress(p.toggleMenu).
+										OnSelect(p.toggleMenu).
 										OnMouseDown(p.toggleMenu).
 										Body(
 											app.Raw(`<svg viewBox="0 0 24 24" width="24" height="24">
