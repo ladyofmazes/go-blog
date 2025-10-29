@@ -51,6 +51,9 @@ func (p *page) Content(v ...app.UI) *page {
 func (p *page) OnNav(ctx app.Context) {
 	p.updateAvailable = ctx.AppUpdateAvailable()
 	ctx.Defer(scrollTo)
+
+	// Add touch listener each time we navigate
+	p.addTouchListener(ctx)
 }
 
 func (p *page) OnAppUpdate(ctx app.Context) {
@@ -84,6 +87,49 @@ func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 		// Or just hide it
 		// menu.Get("style").Set("display", "none")
 	}
+}
+
+func (p *page) OnMount(ctx app.Context) {
+	p.updateAvailable = ctx.AppUpdateAvailable()
+	p.addTouchListener(ctx)
+}
+
+func (p *page) addTouchListener(ctx app.Context) {
+	ctx.Async(func() {
+		btn := app.Window().Get("document").Call("querySelector", ".hamburger-button")
+		if !btn.Truthy() {
+			return
+		}
+
+		callback := app.FuncOf(func(this app.Value, args []app.Value) any {
+			if len(args) > 0 {
+				args[0].Call("preventDefault")
+			}
+
+			p.menuOpen = !p.menuOpen
+
+			menu := app.Window().Get("document").Call("querySelector", ".menu")
+			if menu.Truthy() {
+				if p.menuOpen {
+					menu.Get("style").Set("display", "block")
+					menu.Get("style").Set("position", "fixed")
+					menu.Get("style").Set("top", "0")
+					menu.Get("style").Set("left", "0")
+					menu.Get("style").Set("width", "80%")
+					menu.Get("style").Set("height", "100vh")
+					menu.Get("style").Set("zIndex", "999")
+					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
+					menu.Get("style").Set("transform", "translateX(0)")
+				} else {
+					menu.Get("style").Set("transform", "translateX(-100%)")
+				}
+			}
+
+			return nil
+		})
+
+		btn.Call("addEventListener", "touchstart", callback)
+	})
 }
 
 func (p *page) Render() app.UI {
