@@ -60,13 +60,29 @@ func (p *page) OnAppUpdate(ctx app.Context) {
 func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 	p.menuOpen = !p.menuOpen
 
-	shell := app.Window().Get("document").Call("querySelector", "[data-goapp-ui='shell']")
-	if shell.Truthy() {
-		if p.menuOpen {
-			shell.Get("classList").Call("add", "menu-open")
-		} else {
-			shell.Get("classList").Call("remove", "menu-open")
-		}
+	menu := app.Window().Get("document").Call("querySelector", ".menu")
+	if !menu.Truthy() {
+		return
+	}
+
+	if p.menuOpen {
+		// Show menu
+		menu.Get("style").Set("display", "block")
+		menu.Get("style").Set("position", "fixed")
+		menu.Get("style").Set("top", "0")
+		menu.Get("style").Set("left", "0")
+		menu.Get("style").Set("width", "80%")
+		menu.Get("style").Set("maxWidth", "300px")
+		menu.Get("style").Set("height", "100vh")
+		menu.Get("style").Set("zIndex", "999")
+		menu.Get("style").Set("overflowY", "auto")
+		menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
+		menu.Get("style").Set("transform", "translateX(0)")
+	} else {
+		// Hide menu
+		menu.Get("style").Set("transform", "translateX(-100%)")
+		// Or just hide it
+		// menu.Get("style").Set("display", "none")
 	}
 }
 
