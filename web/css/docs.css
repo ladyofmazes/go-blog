@@ -725,9 +725,9 @@ strong {
 ------------------------------------------------------------------------------*/
 
 /* Hamburger button - hide on desktop, show on mobile */
-.hamburger-button {
+/*.hamburger-button {
   display: none;
-}
+}*/
 
 .hamburger-button svg {
   width: 24px;
@@ -737,14 +737,18 @@ strong {
 
 @media (max-width: 768px) {
 
-  /* Show hamburger button on mobile */
+/* Hamburger button - ALWAYS VISIBLE FOR TESTING */
   .hamburger-button {
     display: block !important;
     cursor: pointer;
     padding: 12px;
     color: white;
-    position: relative;
-    z-index: 1000;
+    background: red;
+    /* Make it obvious */
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
   }
 
   /* Hide desktop menu by default on mobile */
