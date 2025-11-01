@@ -97,38 +97,28 @@ func (p *page) OnMount(ctx app.Context) {
 func (p *page) addTouchListener(ctx app.Context) {
 	ctx.Async(func() {
 		btn := app.Window().Get("document").Call("querySelector", ".hamburger-button")
+
+		app.Window().Get("console").Call("log", "Looking for hamburger button...")
+		app.Window().Get("console").Call("log", "Found:", btn.Truthy())
+
 		if !btn.Truthy() {
 			return
 		}
 
 		callback := app.FuncOf(func(this app.Value, args []app.Value) any {
-			if len(args) > 0 {
-				args[0].Call("preventDefault")
-			}
+			app.Window().Call("alert", "Touch detected!")
+
+			// Don't preventDefault yet - see if alert fires
 
 			p.menuOpen = !p.menuOpen
 
-			menu := app.Window().Get("document").Call("querySelector", ".menu")
-			if menu.Truthy() {
-				if p.menuOpen {
-					menu.Get("style").Set("display", "block")
-					menu.Get("style").Set("position", "fixed")
-					menu.Get("style").Set("top", "0")
-					menu.Get("style").Set("left", "0")
-					menu.Get("style").Set("width", "80%")
-					menu.Get("style").Set("height", "100vh")
-					menu.Get("style").Set("zIndex", "999")
-					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
-					menu.Get("style").Set("transform", "translateX(0)")
-				} else {
-					menu.Get("style").Set("transform", "translateX(-100%)")
-				}
-			}
+			// ... rest of menu code
 
 			return nil
 		})
 
 		btn.Call("addEventListener", "touchstart", callback)
+		app.Window().Get("console").Call("log", "Touch listener added")
 	})
 }
 
