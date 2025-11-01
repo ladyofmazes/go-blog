@@ -106,6 +106,7 @@ func (p *page) addTouchListener(ctx app.Context) {
 		}
 
 		callback := app.FuncOf(func(this app.Value, args []app.Value) any {
+			app.Window().Get("console").Call("log", "Touch callback fired!")
 
 			// Prevent default to avoid double-firing
 			if len(args) > 0 {
@@ -113,10 +114,14 @@ func (p *page) addTouchListener(ctx app.Context) {
 			}
 
 			p.menuOpen = !p.menuOpen
+			app.Window().Get("console").Call("log", "menuOpen toggled to:", p.menuOpen)
 
 			menu := app.Window().Get("document").Call("querySelector", ".menu")
+			app.Window().Get("console").Call("log", "Menu found:", menu.Truthy())
+
 			if menu.Truthy() {
 				if p.menuOpen {
+					app.Window().Get("console").Call("log", "Setting menu to visible")
 					menu.Get("style").Set("display", "block")
 					menu.Get("style").Set("position", "fixed")
 					menu.Get("style").Set("top", "0")
@@ -129,6 +134,7 @@ func (p *page) addTouchListener(ctx app.Context) {
 					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
 					menu.Get("style").Set("transform", "translateX(0)")
 				} else {
+					app.Window().Get("console").Call("log", "Hiding menu")
 					menu.Get("style").Set("transform", "translateX(-100%)")
 				}
 			}
