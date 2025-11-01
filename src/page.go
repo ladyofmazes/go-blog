@@ -91,7 +91,36 @@ func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 
 func (p *page) OnMount(ctx app.Context) {
 	p.updateAvailable = ctx.AppUpdateAvailable()
-	p.addTouchListener(ctx)
+
+	// Expose toggle function to window
+	ctx.Async(func() {
+		toggleFunc := app.FuncOf(func(this app.Value, args []app.Value) any {
+			app.Window().Get("console").Call("log", "Global toggleMenu called!")
+
+			p.menuOpen = !p.menuOpen
+
+			menu := app.Window().Get("document").Call("querySelector", ".menu")
+			if menu.Truthy() {
+				if p.menuOpen {
+					menu.Get("style").Set("display", "block")
+					menu.Get("style").Set("position", "fixed")
+					menu.Get("style").Set("top", "0")
+					menu.Get("style").Set("left", "0")
+					menu.Get("style").Set("width", "80%")
+					menu.Get("style").Set("height", "100vh")
+					menu.Get("style").Set("zIndex", "999")
+					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
+					menu.Get("style").Set("transform", "translateX(0)")
+				} else {
+					menu.Get("style").Set("transform", "translateX(-100%)")
+				}
+			}
+
+			return nil
+		})
+
+		app.Window().Set("toggleMenu", toggleFunc)
+	})
 }
 
 func (p *page) addTouchListener(ctx app.Context) {
@@ -193,20 +222,14 @@ func (p *page) Render() app.UI {
 								Left().
 								Middle().
 								Content(
-									// Manual hamburger button
-									app.Div().
-										Class("hamburger-button").
-										OnClick(p.toggleMenu).
-										OnDblClick(p.toggleMenu).
-										OnChange(p.toggleMenu).
-										OnKeyPress(p.toggleMenu).
-										OnSelect(p.toggleMenu).
-										OnMouseDown(p.toggleMenu).
-										Body(
-											app.Raw(`<svg viewBox="0 0 24 24" width="24" height="24">
+									// Manual hamburger button - REPLACE THIS ENTIRE SECTION
+									app.Raw(`
+                                        <div class="hamburger-button" onclick="window.toggleMenu()">
+                                            <svg viewBox="0 0 24 24" width="24" height="24">
                                                 <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
-                                            </svg>`),
-										),
+                                            </svg>
+                                        </div>
+                                    `),
 
 									app.If(p.updateAvailable, func() app.UI {
 										return app.Div().
