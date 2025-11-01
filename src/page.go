@@ -106,13 +106,32 @@ func (p *page) addTouchListener(ctx app.Context) {
 		}
 
 		callback := app.FuncOf(func(this app.Value, args []app.Value) any {
-			app.Window().Call("alert", "Touch detected!")
 
-			// Don't preventDefault yet - see if alert fires
+			// Prevent default to avoid double-firing
+			if len(args) > 0 {
+				args[0].Call("preventDefault")
+			}
 
 			p.menuOpen = !p.menuOpen
 
-			// ... rest of menu code
+			menu := app.Window().Get("document").Call("querySelector", ".menu")
+			if menu.Truthy() {
+				if p.menuOpen {
+					menu.Get("style").Set("display", "block")
+					menu.Get("style").Set("position", "fixed")
+					menu.Get("style").Set("top", "0")
+					menu.Get("style").Set("left", "0")
+					menu.Get("style").Set("width", "80%")
+					menu.Get("style").Set("maxWidth", "300px")
+					menu.Get("style").Set("height", "100vh")
+					menu.Get("style").Set("zIndex", "999")
+					menu.Get("style").Set("overflowY", "auto")
+					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
+					menu.Get("style").Set("transform", "translateX(0)")
+				} else {
+					menu.Get("style").Set("transform", "translateX(-100%)")
+				}
+			}
 
 			return nil
 		})
