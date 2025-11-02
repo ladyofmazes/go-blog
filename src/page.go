@@ -118,13 +118,31 @@ func (p *page) OnMount(ctx app.Context) {
 					style.Call("setProperty", "position", "fixed", "important")
 					style.Call("setProperty", "top", "0", "important")
 					style.Call("setProperty", "left", "0", "important")
-					style.Call("setProperty", "width", "100%", "important")
+					style.Call("setProperty", "width", "100vw", "important")
 					style.Call("setProperty", "height", "100vh", "important")
 					style.Call("setProperty", "z-index", "99999", "important")
 					style.Call("setProperty", "background", "red", "important")
 					style.Call("setProperty", "transform", "none", "important")
+					style.Call("setProperty", "visibility", "visible", "important")
+					style.Call("setProperty", "opacity", "1", "important")
 
 					app.Window().Get("console").Call("log", "Menu styles set with !important")
+
+					// READ BACK the inline style
+					actualDisplay := style.Call("getPropertyValue", "display")
+					actualBg := style.Call("getPropertyValue", "background")
+					actualZIndex := style.Call("getPropertyValue", "z-index")
+
+					app.Window().Get("console").Call("log", "Readback - display:", actualDisplay)
+					app.Window().Get("console").Call("log", "Readback - background:", actualBg)
+					app.Window().Get("console").Call("log", "Readback - z-index:", actualZIndex)
+
+					// Check bounding box
+					rect := menu.Call("getBoundingClientRect")
+					app.Window().Get("console").Call("log", "Menu rect - top:", rect.Get("top"))
+					app.Window().Get("console").Call("log", "Menu rect - left:", rect.Get("left"))
+					app.Window().Get("console").Call("log", "Menu rect - width:", rect.Get("width"))
+					app.Window().Get("console").Call("log", "Menu rect - height:", rect.Get("height"))
 				} else {
 					app.Window().Get("console").Call("log", "Hiding menu")
 					menu.Get("style").Set("transform", "translateX(-100%)")
