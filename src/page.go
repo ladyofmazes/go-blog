@@ -105,16 +105,15 @@ func (p *page) OnMount(ctx app.Context) {
 
 			if menu.Truthy() {
 				if p.menuOpen {
-					app.Window().Get("console").Call("log", "Showing menu")
 					menu.Get("style").Set("display", "block")
 					menu.Get("style").Set("position", "fixed")
 					menu.Get("style").Set("top", "0")
 					menu.Get("style").Set("left", "0")
-					menu.Get("style").Set("width", "80%")
+					menu.Get("style").Set("width", "100%") // Full width
 					menu.Get("style").Set("height", "100vh")
-					menu.Get("style").Set("zIndex", "999")
-					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
-					menu.Get("style").Set("transform", "translateX(0)")
+					menu.Get("style").Set("zIndex", "99999")   // Very high z-index
+					menu.Get("style").Set("background", "red") // Bright red
+					menu.Get("style").Set("transform", "none") // No transform
 				} else {
 					app.Window().Get("console").Call("log", "Hiding menu")
 					menu.Get("style").Set("transform", "translateX(-100%)")
