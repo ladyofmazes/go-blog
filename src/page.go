@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/maxence-charriere/go-app/v10/pkg/app"
 	"github.com/maxence-charriere/go-app/v10/pkg/ui"
 )
@@ -102,79 +100,46 @@ func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 func (p *page) OnMount(ctx app.Context) {
 	p.updateAvailable = ctx.AppUpdateAvailable()
 
-	// Expose toggle function to window
 	ctx.Async(func() {
 		toggleFunc := app.FuncOf(func(this app.Value, args []app.Value) any {
-			app.Window().Get("console").Call("log", "Global toggleMenu called!")
+			app.Window().Get("console").Call("log", "Creating custom menu overlay")
 
 			p.menuOpen = !p.menuOpen
-			app.Window().Get("console").Call("log", "menuOpen:", p.menuOpen)
 
-			menu := app.Window().Get("document").Call("querySelector", ".menu")
-			app.Window().Get("console").Call("log", "Menu found:", menu.Truthy())
+			if p.menuOpen {
+				// CREATE A BRAND NEW ELEMENT instead of using .menu
+				doc := app.Window().Get("document")
+				body := doc.Get("body")
 
-			if menu.Truthy() {
-				if p.menuOpen {
-					style := menu.Get("style")
-					style.Call("setProperty", "display", "block", "important")
-					style.Call("setProperty", "position", "fixed", "important")
-					style.Call("setProperty", "top", "0", "important")
-					style.Call("setProperty", "left", "0", "important")
-					style.Call("setProperty", "width", "80%", "important")
-					style.Call("setProperty", "min-width", "300px", "important") // Add min-width
-					style.Call("setProperty", "height", "100vh", "important")
-					style.Call("setProperty", "min-height", "100vh", "important") // Add min-height
-					style.Call("setProperty", "z-index", "99999", "important")
-					style.Call("setProperty", "background", "red", "important")
-					style.Call("setProperty", "padding", "20px", "important") // Add padding
+				// Create overlay div
+				overlay := doc.Call("createElement", "div")
+				overlay.Set("id", "mobile-menu-overlay")
+				overlay.Set("innerHTML", `
+                    <div style="background: red; color: white; padding: 40px; font-size: 24px;">
+                        <h2>MOBILE MENU</h2>
+                        <p>Home</p>
+                        <p>Intro</p>
+                        <p onclick="document.getElementById('mobile-menu-overlay').remove()">Close</p>
+                    </div>
+                `)
 
-					// Force any child elements to be visible too
-					children := menu.Get("children")
-					childCount := children.Get("length").Int()
-					app.Window().Get("console").Call("log", "Menu has", childCount, "children")
+				style := overlay.Get("style")
+				style.Set("position", "fixed")
+				style.Set("top", "0")
+				style.Set("left", "0")
+				style.Set("width", "100vw")
+				style.Set("height", "100vh")
+				style.Set("zIndex", "99999")
+				style.Set("background", "rgba(0,0,0,0.9)")
 
-					if childCount > 0 {
-						firstChild := children.Call("item", 0)
-
-						app.Window().Get("console").Call("log", "Child tag:", firstChild.Get("tagName"))
-						app.Window().Get("console").Call("log", "Child classes:", firstChild.Get("className"))
-
-						// Check grandchildren
-						grandchildren := firstChild.Get("children")
-						gcCount := grandchildren.Get("length").Int()
-						app.Window().Get("console").Call("log", "Child has", gcCount, "grandchildren")
-
-						// Force the child AND all its descendants to have size
-						firstChild.Get("style").Call("setProperty", "display", "block", "important")
-						firstChild.Get("style").Call("setProperty", "width", "100%", "important")
-						firstChild.Get("style").Call("setProperty", "height", "100%", "important")
-						firstChild.Get("style").Call("setProperty", "background", "blue", "important")
-
-						// If there are grandchildren, force them visible too
-						for i := 0; i < gcCount; i++ {
-							gc := grandchildren.Call("item", i)
-							gc.Get("style").Call("setProperty", "display", "block", "important")
-							gc.Get("style").Call("setProperty", "background", "green", "important")
-							gc.Get("style").Call("setProperty", "padding", "20px", "important")
-							gc.Get("style").Call("setProperty", "width", "100%", "important")
-							gc.Get("style").Call("setProperty", "min-height", "50px", "important")
-							gc.Get("style").Call("setProperty", "color", "white", "important")
-							gc.Get("style").Call("setProperty", "font-size", "24px", "important")
-
-							// ADD TEXT CONTENT
-							gc.Set("innerHTML", "MENU ITEM "+fmt.Sprint(i))
-
-							app.Window().Get("console").Call("log", "Set innerHTML for grandchild", i)
-
-							// Check great-grandchildren
-							ggc := gc.Get("children")
-							ggcCount := ggc.Get("length").Int()
-							app.Window().Get("console").Call("log", "  Grandchild", i, "has", ggcCount, "great-grandchildren")
-						}
-					}
-				} else {
-					app.Window().Get("console").Call("log", "Hiding menu")
-					menu.Get("style").Set("transform", "translateX(-100%)")
+				body.Call("appendChild", overlay)
+				app.Window().Get("console").Call("log", "Overlay added to body")
+			} else {
+				// Remove overlay
+				doc := app.Window().Get("document")
+				overlay := doc.Call("getElementById", "mobile-menu-overlay")
+				if overlay.Truthy() {
+					overlay.Call("remove")
 				}
 			}
 
