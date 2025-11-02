@@ -131,26 +131,34 @@ func (p *page) OnMount(ctx app.Context) {
 					childCount := children.Get("length").Int()
 					app.Window().Get("console").Call("log", "Menu has", childCount, "children")
 
-					// Apply styles to first child too
 					if childCount > 0 {
 						firstChild := children.Call("item", 0)
 
-						// Log what this child is
-						childTag := firstChild.Get("tagName")
-						childClass := firstChild.Get("className")
-						app.Window().Get("console").Call("log", "Child tag:", childTag)
-						app.Window().Get("console").Call("log", "Child classes:", childClass)
+						app.Window().Get("console").Call("log", "Child tag:", firstChild.Get("tagName"))
+						app.Window().Get("console").Call("log", "Child classes:", firstChild.Get("className"))
 
-						// Check its size
-						childRect := firstChild.Call("getBoundingClientRect")
-						app.Window().Get("console").Call("log", "Child width:", childRect.Get("width"))
-						app.Window().Get("console").Call("log", "Child height:", childRect.Get("height"))
+						// Check grandchildren
+						grandchildren := firstChild.Get("children")
+						gcCount := grandchildren.Get("length").Int()
+						app.Window().Get("console").Call("log", "Child has", gcCount, "grandchildren")
 
-						// Force it to have size
+						// Force the child AND all its descendants to have size
 						firstChild.Get("style").Call("setProperty", "display", "block", "important")
-						firstChild.Get("style").Call("setProperty", "width", "300px", "important")
-						firstChild.Get("style").Call("setProperty", "height", "100vh", "important")
+						firstChild.Get("style").Call("setProperty", "width", "100%", "important")
+						firstChild.Get("style").Call("setProperty", "height", "100%", "important")
 						firstChild.Get("style").Call("setProperty", "background", "blue", "important")
+
+						// If there are grandchildren, force them visible too
+						for i := 0; i < gcCount; i++ {
+							gc := grandchildren.Call("item", i)
+							gc.Get("style").Call("setProperty", "display", "block", "important")
+							gc.Get("style").Call("setProperty", "background", "green", "important")
+							gc.Get("style").Call("setProperty", "padding", "20px", "important")
+
+							gcTag := gc.Get("tagName")
+							gcClass := gc.Get("className")
+							app.Window().Get("console").Call("log", "  Grandchild", i, "tag:", gcTag, "class:", gcClass)
+						}
 					}
 				} else {
 					app.Window().Get("console").Call("log", "Hiding menu")
