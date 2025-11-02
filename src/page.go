@@ -61,28 +61,33 @@ func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 	p.menuOpen = !p.menuOpen
 
 	menu := app.Window().Get("document").Call("querySelector", ".menu")
-	if !menu.Truthy() {
-		return
-	}
+	if menu.Truthy() {
+		if p.menuOpen {
+			// Log EVERYTHING about the menu element
+			app.Window().Get("console").Call("log", "=== MENU DEBUG ===")
 
-	if p.menuOpen {
-		// Show menu
-		menu.Get("style").Set("display", "block")
-		menu.Get("style").Set("position", "fixed")
-		menu.Get("style").Set("top", "0")
-		menu.Get("style").Set("left", "0")
-		menu.Get("style").Set("width", "80%")
-		menu.Get("style").Set("maxWidth", "300px")
-		menu.Get("style").Set("height", "100vh")
-		menu.Get("style").Set("zIndex", "999")
-		menu.Get("style").Set("overflowY", "auto")
-		menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
-		menu.Get("style").Set("transform", "translateX(0)")
-	} else {
-		// Hide menu
-		menu.Get("style").Set("transform", "translateX(-100%)")
-		// Or just hide it
-		// menu.Get("style").Set("display", "none")
+			// Get all current styles
+			computedStyle := app.Window().Get("window").Call("getComputedStyle", menu)
+			app.Window().Get("console").Call("log", "Computed display:", computedStyle.Call("getPropertyValue", "display"))
+			app.Window().Get("console").Call("log", "Computed position:", computedStyle.Call("getPropertyValue", "position"))
+			app.Window().Get("console").Call("log", "Computed z-index:", computedStyle.Call("getPropertyValue", "z-index"))
+			app.Window().Get("console").Call("log", "Computed visibility:", computedStyle.Call("getPropertyValue", "visibility"))
+			app.Window().Get("console").Call("log", "Computed opacity:", computedStyle.Call("getPropertyValue", "opacity"))
+
+			// Now set the styles
+			style := menu.Get("style")
+			style.Call("setProperty", "display", "block", "important")
+			style.Call("setProperty", "position", "fixed", "important")
+			style.Call("setProperty", "top", "0", "important")
+			style.Call("setProperty", "left", "0", "important")
+			style.Call("setProperty", "width", "100%", "important")
+			style.Call("setProperty", "height", "100vh", "important")
+			style.Call("setProperty", "z-index", "99999", "important")
+			style.Call("setProperty", "background", "red", "important")
+
+			// Check after setting
+			app.Window().Get("console").Call("log", "After setting - display:", computedStyle.Call("getPropertyValue", "display"))
+		}
 	}
 }
 
