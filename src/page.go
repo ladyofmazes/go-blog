@@ -113,28 +113,34 @@ func (p *page) OnMount(ctx app.Context) {
 			if p.menuOpen {
 				app.Window().Get("console").Call("log", "Creating overlay...")
 
+				doc := app.Window().Get("document")
 				body := doc.Get("body")
 
-				// CREATE overlay
+				// Create overlay
 				overlay := doc.Call("createElement", "div")
 				overlay.Set("id", "mobile-menu-overlay")
-				overlay.Set("innerHTML", `
-                    <div style="background: red; color: white; padding: 40px; font-size: 24px;">
-                        <h2>MOBILE MENU</h2>
-                        <p>Home</p>
-                        <p>Intro</p>
-                        <p onclick="window.toggleMenu()">Close</p>
-                    </div>
-                `)
+
+				// Copy the actual menu HTML from the .menu element
+				originalMenu := doc.Call("querySelector", ".menu")
+				if originalMenu.Truthy() {
+					menuHTML := originalMenu.Get("innerHTML").String()
+					app.Window().Get("console").Call("log", "Copied menu HTML, length:", len(menuHTML))
+					overlay.Set("innerHTML", menuHTML)
+				} else {
+					overlay.Set("innerHTML", "<p style='color:white;'>Menu not found</p>")
+				}
 
 				style := overlay.Get("style")
 				style.Set("position", "fixed")
 				style.Set("top", "0")
 				style.Set("left", "0")
-				style.Set("width", "100vw")
+				style.Set("width", "80%")
+				style.Set("maxWidth", "300px")
 				style.Set("height", "100vh")
 				style.Set("zIndex", "99999")
-				style.Set("background", "rgba(0,0,0,0.9)")
+				style.Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
+				style.Set("overflowY", "auto")
+				style.Set("padding", "20px")
 
 				body.Call("appendChild", overlay)
 				app.Window().Get("console").Call("log", "Overlay appended")
