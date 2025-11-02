@@ -108,8 +108,6 @@ func (p *page) OnMount(ctx app.Context) {
 
 			app.Window().Get("console").Call("log", "menuOpen after toggle:", p.menuOpen)
 
-			doc := app.Window().Get("document")
-
 			if p.menuOpen {
 				app.Window().Get("console").Call("log", "Creating overlay...")
 
@@ -120,15 +118,19 @@ func (p *page) OnMount(ctx app.Context) {
 				overlay := doc.Call("createElement", "div")
 				overlay.Set("id", "mobile-menu-overlay")
 
-				// Copy the actual menu HTML from the .menu element
+				// Copy actual menu content
 				originalMenu := doc.Call("querySelector", ".menu")
+				menuContent := ""
 				if originalMenu.Truthy() {
-					menuHTML := originalMenu.Get("innerHTML").String()
-					app.Window().Get("console").Call("log", "Copied menu HTML, length:", len(menuHTML))
-					overlay.Set("innerHTML", menuHTML)
-				} else {
-					overlay.Set("innerHTML", "<p style='color:white;'>Menu not found</p>")
+					menuContent = originalMenu.Get("innerHTML").String()
 				}
+
+				// Add close button at top + menu content
+				overlay.Set("innerHTML", `
+                    <div style="display: flex; justify-content: flex-end; padding: 10px;">
+                        <div onclick="window.toggleMenu()" style="cursor: pointer; color: white; font-size: 30px; font-weight: bold;">×</div>
+                    </div>
+                    `+menuContent)
 
 				style := overlay.Get("style")
 				style.Set("position", "fixed")
@@ -140,16 +142,37 @@ func (p *page) OnMount(ctx app.Context) {
 				style.Set("zIndex", "99999")
 				style.Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
 				style.Set("overflowY", "auto")
-				style.Set("padding", "20px")
 
 				body.Call("appendChild", overlay)
+
+				// Create backdrop that closes menu when clicked
+				backdrop := doc.Call("createElement", "div")
+				backdrop.Set("id", "mobile-menu-backdrop")
+				backdrop.Set("onclick", "window.toggleMenu()")
+				backdropStyle := backdrop.Get("style")
+				backdropStyle.Set("position", "fixed")
+				backdropStyle.Set("top", "0")
+				backdropStyle.Set("left", "0")
+				backdropStyle.Set("width", "100vw")
+				backdropStyle.Set("height", "100vh")
+				backdropStyle.Set("background", "rgba(0,0,0,0.5)")
+				backdropStyle.Set("zIndex", "99998")
+
+				body.Call("appendChild", backdrop)
+
 				app.Window().Get("console").Call("log", "Overlay appended")
 			} else {
 				app.Window().Get("console").Call("log", "Removing overlay...")
+				doc := app.Window().Get("document")
+
 				overlay := doc.Call("getElementById", "mobile-menu-overlay")
 				if overlay.Truthy() {
 					overlay.Call("remove")
-					app.Window().Get("console").Call("log", "Overlay removed")
+				}
+
+				backdrop := doc.Call("getElementById", "mobile-menu-backdrop")
+				if backdrop.Truthy() {
+					backdrop.Call("remove")
 				}
 			}
 
