@@ -105,15 +105,18 @@ func (p *page) OnMount(ctx app.Context) {
 
 			if menu.Truthy() {
 				if p.menuOpen {
-					menu.Get("style").Set("display", "block")
-					menu.Get("style").Set("position", "fixed")
-					menu.Get("style").Set("top", "0")
-					menu.Get("style").Set("left", "0")
-					menu.Get("style").Set("width", "100%") // Full width
-					menu.Get("style").Set("height", "100vh")
-					menu.Get("style").Set("zIndex", "99999")   // Very high z-index
-					menu.Get("style").Set("background", "red") // Bright red
-					menu.Get("style").Set("transform", "none") // No transform
+					style := menu.Get("style")
+					style.Call("setProperty", "display", "block", "important")
+					style.Call("setProperty", "position", "fixed", "important")
+					style.Call("setProperty", "top", "0", "important")
+					style.Call("setProperty", "left", "0", "important")
+					style.Call("setProperty", "width", "100%", "important")
+					style.Call("setProperty", "height", "100vh", "important")
+					style.Call("setProperty", "z-index", "99999", "important")
+					style.Call("setProperty", "background", "red", "important")
+					style.Call("setProperty", "transform", "none", "important")
+
+					app.Window().Get("console").Call("log", "Menu styles set with !important")
 				} else {
 					app.Window().Get("console").Call("log", "Hiding menu")
 					menu.Get("style").Set("transform", "translateX(-100%)")
