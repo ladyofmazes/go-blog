@@ -118,31 +118,26 @@ func (p *page) OnMount(ctx app.Context) {
 					style.Call("setProperty", "position", "fixed", "important")
 					style.Call("setProperty", "top", "0", "important")
 					style.Call("setProperty", "left", "0", "important")
-					style.Call("setProperty", "width", "100vw", "important")
+					style.Call("setProperty", "width", "80%", "important")
+					style.Call("setProperty", "min-width", "300px", "important") // Add min-width
 					style.Call("setProperty", "height", "100vh", "important")
+					style.Call("setProperty", "min-height", "100vh", "important") // Add min-height
 					style.Call("setProperty", "z-index", "99999", "important")
 					style.Call("setProperty", "background", "red", "important")
-					style.Call("setProperty", "transform", "none", "important")
-					style.Call("setProperty", "visibility", "visible", "important")
-					style.Call("setProperty", "opacity", "1", "important")
+					style.Call("setProperty", "padding", "20px", "important") // Add padding
 
-					app.Window().Get("console").Call("log", "Menu styles set with !important")
+					// Force any child elements to be visible too
+					children := menu.Get("children")
+					childCount := children.Get("length").Int()
+					app.Window().Get("console").Call("log", "Menu has", childCount, "children")
 
-					// READ BACK the inline style
-					actualDisplay := style.Call("getPropertyValue", "display")
-					actualBg := style.Call("getPropertyValue", "background")
-					actualZIndex := style.Call("getPropertyValue", "z-index")
-
-					app.Window().Get("console").Call("log", "Readback - display:", actualDisplay)
-					app.Window().Get("console").Call("log", "Readback - background:", actualBg)
-					app.Window().Get("console").Call("log", "Readback - z-index:", actualZIndex)
-
-					// Check bounding box
-					rect := menu.Call("getBoundingClientRect")
-					app.Window().Get("console").Call("log", "Menu rect - top:", rect.Get("top"))
-					app.Window().Get("console").Call("log", "Menu rect - left:", rect.Get("left"))
-					app.Window().Get("console").Call("log", "Menu rect - width:", rect.Get("width"))
-					app.Window().Get("console").Call("log", "Menu rect - height:", rect.Get("height"))
+					// Apply styles to first child too
+					if childCount > 0 {
+						firstChild := children.Call("item", 0)
+						firstChild.Get("style").Call("setProperty", "display", "block", "important")
+						firstChild.Get("style").Call("setProperty", "width", "100%", "important")
+						firstChild.Get("style").Call("setProperty", "height", "100%", "important")
+					}
 				} else {
 					app.Window().Get("console").Call("log", "Hiding menu")
 					menu.Get("style").Set("transform", "translateX(-100%)")
