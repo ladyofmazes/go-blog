@@ -50,6 +50,24 @@ func (p *page) Content(v ...app.UI) *page {
 
 func (p *page) OnNav(ctx app.Context) {
 	p.updateAvailable = ctx.AppUpdateAvailable()
+
+	// Clean up any existing menu overlays from previous page
+	ctx.Async(func() {
+		doc := app.Window().Get("document")
+
+		oldOverlay := doc.Call("getElementById", "mobile-menu-overlay")
+		if oldOverlay.Truthy() {
+			oldOverlay.Call("remove")
+		}
+
+		oldBackdrop := doc.Call("getElementById", "mobile-menu-backdrop")
+		if oldBackdrop.Truthy() {
+			oldBackdrop.Call("remove")
+		}
+	})
+
+	p.menuOpen = false // Reset menu state
+
 	ctx.Defer(scrollTo)
 }
 
