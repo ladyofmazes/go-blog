@@ -63,30 +63,36 @@ func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 	menu := app.Window().Get("document").Call("querySelector", ".menu")
 	if menu.Truthy() {
 		if p.menuOpen {
-			// Log EVERYTHING about the menu element
-			app.Window().Get("console").Call("log", "=== MENU DEBUG ===")
-
-			// Get all current styles
-			computedStyle := app.Window().Get("window").Call("getComputedStyle", menu)
-			app.Window().Get("console").Call("log", "Computed display:", computedStyle.Call("getPropertyValue", "display"))
-			app.Window().Get("console").Call("log", "Computed position:", computedStyle.Call("getPropertyValue", "position"))
-			app.Window().Get("console").Call("log", "Computed z-index:", computedStyle.Call("getPropertyValue", "z-index"))
-			app.Window().Get("console").Call("log", "Computed visibility:", computedStyle.Call("getPropertyValue", "visibility"))
-			app.Window().Get("console").Call("log", "Computed opacity:", computedStyle.Call("getPropertyValue", "opacity"))
-
-			// Now set the styles
 			style := menu.Get("style")
 			style.Call("setProperty", "display", "block", "important")
 			style.Call("setProperty", "position", "fixed", "important")
 			style.Call("setProperty", "top", "0", "important")
 			style.Call("setProperty", "left", "0", "important")
-			style.Call("setProperty", "width", "100%", "important")
+			style.Call("setProperty", "width", "100vw", "important") // Changed to 100vw
 			style.Call("setProperty", "height", "100vh", "important")
 			style.Call("setProperty", "z-index", "99999", "important")
 			style.Call("setProperty", "background", "red", "important")
+			style.Call("setProperty", "transform", "none", "important")
+			style.Call("setProperty", "visibility", "visible", "important") // Add this
+			style.Call("setProperty", "opacity", "1", "important")          // Add this
 
-			// Check after setting
-			app.Window().Get("console").Call("log", "After setting - display:", computedStyle.Call("getPropertyValue", "display"))
+			app.Window().Get("console").Call("log", "Menu styles set with !important")
+
+			// READ BACK the inline style to verify it stuck
+			actualDisplay := style.Call("getPropertyValue", "display")
+			actualBg := style.Call("getPropertyValue", "background")
+			actualZIndex := style.Call("getPropertyValue", "z-index")
+
+			app.Window().Get("console").Call("log", "Readback - display:", actualDisplay)
+			app.Window().Get("console").Call("log", "Readback - background:", actualBg)
+			app.Window().Get("console").Call("log", "Readback - z-index:", actualZIndex)
+
+			// Also check the element's bounding box
+			rect := menu.Call("getBoundingClientRect")
+			app.Window().Get("console").Call("log", "Menu rect - top:", rect.Get("top"))
+			app.Window().Get("console").Call("log", "Menu rect - left:", rect.Get("left"))
+			app.Window().Get("console").Call("log", "Menu rect - width:", rect.Get("width"))
+			app.Window().Get("console").Call("log", "Menu rect - height:", rect.Get("height"))
 		}
 	}
 }
