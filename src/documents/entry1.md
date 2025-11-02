@@ -1,39 +1,9 @@
 # Introduction to Blog
 
-A blog is a log of b. B is a short word for the excretion of the male cow.
-
-## How to blog
-
-Type until there are enough words that it has met the standard definition of a blog.
-
-Currently around 9 million
-
-## History
-
-Blogging was invented in the year 1912 as a response to WWI shortages in actual news
+This is a document of my many experiments using web assembly to create static pages
 
 ## About Me
 
-Conflicting reports exist.
-
-Potentially a lifelong wife and mother of three.
-
-Alternatively a member of the CIA and/or founder of a cult.
-
-In extreme cases some sort of nightmare elder god,
-
-the likes of which humanity can not even conceive,
-
-older than the stars and all that humanity holds dear,
-
-an endless wandering emptiness with depthless hunger,
-
-attempting to modify and then devour all existence,
-
-stymied but patient, ever so patient.
-
-Or I may just be a trans masc non-binary person who lives
-
-with my sister, our dog and two cats and answers support tickets
-
-only half of which are caused by things that I created
+I am a data scientist (by training), data software engineer/DBA (by trade) and roboticist (by night), with expertise in machine learning algorithms, analytics and cutting edge data science tools like SQL, Hadoop, Pandas, Numpy, Scikit-learn and AWS, as well as 10+ years of experience with C++ and Python and database engineering including use of AWS, Azure and GCP cloud infrastructure.
+I got my PhD in 2012 at the University of Rochester. As a PhD student and then as a postdoctoral researcher in physics I developed my computational and analytical skills including machine learning tools like logistic regression and random forests and feature extraction using correlation, principle component analysis and linear discriminant analysis.
+In June of 2016 I became an Insight Data Science fellow. As a fellow I developed a user friendly web application, NerdVentures!, and created strong relationships with mentors in a network of over 400 employed data scientists at places like Facebook, LinkedIn and Netflix. Have worked at large startups like Uber, Zymergen and Digital Diagnostics and currently employed as a Senior Cloud Database Engineer at The RealReal. I am also passionate about libraries and am pursuing my MSLIS at Syracuse University with a goal of democratizing data access
