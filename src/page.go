@@ -51,9 +51,6 @@ func (p *page) Content(v ...app.UI) *page {
 func (p *page) OnNav(ctx app.Context) {
 	p.updateAvailable = ctx.AppUpdateAvailable()
 	ctx.Defer(scrollTo)
-
-	// Add touch listener each time we navigate
-	p.addTouchListener(ctx)
 }
 
 func (p *page) OnAppUpdate(ctx app.Context) {
@@ -127,59 +124,6 @@ func (p *page) OnMount(ctx app.Context) {
 		})
 
 		app.Window().Set("toggleMenu", toggleFunc)
-	})
-}
-
-func (p *page) addTouchListener(ctx app.Context) {
-	ctx.Async(func() {
-		btn := app.Window().Get("document").Call("querySelector", ".hamburger-button")
-
-		app.Window().Get("console").Call("log", "Looking for hamburger button...")
-		app.Window().Get("console").Call("log", "Found:", btn.Truthy())
-
-		if !btn.Truthy() {
-			return
-		}
-
-		callback := app.FuncOf(func(this app.Value, args []app.Value) any {
-			app.Window().Get("console").Call("log", "Touch callback fired!")
-
-			// Prevent default to avoid double-firing
-			if len(args) > 0 {
-				args[0].Call("preventDefault")
-			}
-
-			p.menuOpen = !p.menuOpen
-			app.Window().Get("console").Call("log", "menuOpen toggled to:", p.menuOpen)
-
-			menu := app.Window().Get("document").Call("querySelector", ".menu")
-			app.Window().Get("console").Call("log", "Menu found:", menu.Truthy())
-
-			if menu.Truthy() {
-				if p.menuOpen {
-					app.Window().Get("console").Call("log", "Setting menu to visible")
-					menu.Get("style").Set("display", "block")
-					menu.Get("style").Set("position", "fixed")
-					menu.Get("style").Set("top", "0")
-					menu.Get("style").Set("left", "0")
-					menu.Get("style").Set("width", "80%")
-					menu.Get("style").Set("maxWidth", "300px")
-					menu.Get("style").Set("height", "100vh")
-					menu.Get("style").Set("zIndex", "999")
-					menu.Get("style").Set("overflowY", "auto")
-					menu.Get("style").Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
-					menu.Get("style").Set("transform", "translateX(0)")
-				} else {
-					app.Window().Get("console").Call("log", "Hiding menu")
-					menu.Get("style").Set("transform", "translateX(-100%)")
-				}
-			}
-
-			return nil
-		})
-
-		btn.Call("addEventListener", "touchstart", callback)
-		app.Window().Get("console").Call("log", "Touch listener added")
 	})
 }
 
