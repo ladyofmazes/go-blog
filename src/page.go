@@ -134,9 +134,23 @@ func (p *page) OnMount(ctx app.Context) {
 					// Apply styles to first child too
 					if childCount > 0 {
 						firstChild := children.Call("item", 0)
+
+						// Log what this child is
+						childTag := firstChild.Get("tagName")
+						childClass := firstChild.Get("className")
+						app.Window().Get("console").Call("log", "Child tag:", childTag)
+						app.Window().Get("console").Call("log", "Child classes:", childClass)
+
+						// Check its size
+						childRect := firstChild.Call("getBoundingClientRect")
+						app.Window().Get("console").Call("log", "Child width:", childRect.Get("width"))
+						app.Window().Get("console").Call("log", "Child height:", childRect.Get("height"))
+
+						// Force it to have size
 						firstChild.Get("style").Call("setProperty", "display", "block", "important")
-						firstChild.Get("style").Call("setProperty", "width", "100%", "important")
-						firstChild.Get("style").Call("setProperty", "height", "100%", "important")
+						firstChild.Get("style").Call("setProperty", "width", "300px", "important")
+						firstChild.Get("style").Call("setProperty", "height", "100vh", "important")
+						firstChild.Get("style").Call("setProperty", "background", "blue", "important")
 					}
 				} else {
 					app.Window().Get("console").Call("log", "Hiding menu")
