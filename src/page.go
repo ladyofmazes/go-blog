@@ -102,41 +102,48 @@ func (p *page) OnMount(ctx app.Context) {
 
 	ctx.Async(func() {
 		toggleFunc := app.FuncOf(func(this app.Value, args []app.Value) any {
-			app.Window().Get("console").Call("log", "Creating custom menu overlay")
+			app.Window().Get("console").Call("log", "Toggle called, menuOpen before:", p.menuOpen)
+
+			p.menuOpen = !p.menuOpen // Toggle FIRST
+
+			app.Window().Get("console").Call("log", "menuOpen after toggle:", p.menuOpen)
+
+			doc := app.Window().Get("document")
 
 			if p.menuOpen {
-				doc := app.Window().Get("document")
+				app.Window().Get("console").Call("log", "Creating overlay...")
+
 				body := doc.Get("body")
 
-				// Create overlay
+				// CREATE overlay
 				overlay := doc.Call("createElement", "div")
 				overlay.Set("id", "mobile-menu-overlay")
-
-				// Copy the actual menu content from the .menu element
-				originalMenu := doc.Call("querySelector", ".menu")
-				if originalMenu.Truthy() {
-					menuHTML := originalMenu.Get("innerHTML").String()
-					overlay.Set("innerHTML", menuHTML)
-				}
+				overlay.Set("innerHTML", `
+                    <div style="background: red; color: white; padding: 40px; font-size: 24px;">
+                        <h2>MOBILE MENU</h2>
+                        <p>Home</p>
+                        <p>Intro</p>
+                        <p onclick="window.toggleMenu()">Close</p>
+                    </div>
+                `)
 
 				style := overlay.Get("style")
 				style.Set("position", "fixed")
 				style.Set("top", "0")
 				style.Set("left", "0")
-				style.Set("width", "80%")
-				style.Set("maxWidth", "300px")
+				style.Set("width", "100vw")
 				style.Set("height", "100vh")
 				style.Set("zIndex", "99999")
-				style.Set("background", "linear-gradient(#2e343a, rgba(0, 0, 0, 0.9))")
-				style.Set("overflowY", "auto")
-				style.Set("padding", "20px")
+				style.Set("background", "rgba(0,0,0,0.9)")
 
 				body.Call("appendChild", overlay)
+				app.Window().Get("console").Call("log", "Overlay appended")
 			} else {
-				doc := app.Window().Get("document")
+				app.Window().Get("console").Call("log", "Removing overlay...")
 				overlay := doc.Call("getElementById", "mobile-menu-overlay")
 				if overlay.Truthy() {
 					overlay.Call("remove")
+					app.Window().Get("console").Call("log", "Overlay removed")
 				}
 			}
 
@@ -144,6 +151,7 @@ func (p *page) OnMount(ctx app.Context) {
 		})
 
 		app.Window().Set("toggleMenu", toggleFunc)
+		app.Window().Get("console").Call("log", "toggleMenu function exposed to window")
 	})
 }
 
