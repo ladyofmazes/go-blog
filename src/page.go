@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/maxence-charriere/go-app/v10/pkg/app"
 	"github.com/maxence-charriere/go-app/v10/pkg/ui"
 )
@@ -154,10 +156,20 @@ func (p *page) OnMount(ctx app.Context) {
 							gc.Get("style").Call("setProperty", "display", "block", "important")
 							gc.Get("style").Call("setProperty", "background", "green", "important")
 							gc.Get("style").Call("setProperty", "padding", "20px", "important")
+							gc.Get("style").Call("setProperty", "width", "100%", "important")
+							gc.Get("style").Call("setProperty", "min-height", "50px", "important")
+							gc.Get("style").Call("setProperty", "color", "white", "important")
+							gc.Get("style").Call("setProperty", "font-size", "24px", "important")
 
-							gcTag := gc.Get("tagName")
-							gcClass := gc.Get("className")
-							app.Window().Get("console").Call("log", "  Grandchild", i, "tag:", gcTag, "class:", gcClass)
+							// ADD TEXT CONTENT
+							gc.Set("innerHTML", "MENU ITEM "+fmt.Sprint(i))
+
+							app.Window().Get("console").Call("log", "Set innerHTML for grandchild", i)
+
+							// Check great-grandchildren
+							ggc := gc.Get("children")
+							ggcCount := ggc.Get("length").Int()
+							app.Window().Get("console").Call("log", "  Grandchild", i, "has", ggcCount, "great-grandchildren")
 						}
 					}
 				} else {
