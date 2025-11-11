@@ -110,9 +110,8 @@ func (m *menu) Render() app.UI {
 				ui.Link().
 					Class(linkClass).
 					Icon(userLockSVG).
-					Label("Privacy Policy").
-					Href("/privacy-policy").
-					Class(isFocus("/privacy-policy")),
+					Label("Resume").
+					Href("http://mamday-resume.s3-website.us-east-2.amazonaws.com/"),
 
 				app.Div().Class("separator"),
 			),
