@@ -31,6 +31,7 @@ func (h *hello) Render() app.UI {
 		).
 		Content(
 			newMarkdownDoc().MD(entry1Content), // Use embedded content directly
+			app.Audio().AutoPlay(true).Controls(true).Src("/web/ASongForRoss.wav"),
 		)
 }
 
@@ -72,6 +73,7 @@ func main() {
 	http.Handle("/", &app.Handler{
 		Name:        "Home",
 		Description: "Home Page",
+		Resources:   app.LocalDir("."),
 		Styles: []string{
 			// "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap",
 			"/app.css",
