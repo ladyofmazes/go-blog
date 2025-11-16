@@ -36,16 +36,4 @@
     <script src="/web/js/prism.js"></script>
 </head>
 
-<body>
-    <script>
-        const go = new Go();
-        WebAssembly.instantiateStreaming(fetch("web/app.wasm"), go.importObject).then(
-            (obj) => {
-                go.run(obj.instance);
-            }
-        );
-
-    </script>
-</body>
-
 </html>
