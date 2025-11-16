@@ -1,0 +1,8 @@
+/*.wav
+  Content-Type: audio/wav
+
+/*.mp3
+  Content-Type: audio/mpeg
+
+/*.ogg
+  Content-Type: audio/ogg
