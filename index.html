@@ -22,18 +22,21 @@
             background-color: #f4f4f4;
         }
     </style>
-    <script>
-        const initGo = new Go();
-        WebAssembly.instantiateStreaming(
-            fetch("web/app.wasm?v=" + Date.now()),  // Cache bust
-            initGo.importObject
-        ).then((obj) => {
-            initGo.run(obj.instance);
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script>
     <script src="/web/js/prism.js"></script>
 </head>
+
+<body>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("web/app.wasm"), go.importObject).then(
+            (obj) => {
+                go.run(obj.instance);
+            }
+        );
+
+    </script>
+</body>
 
 </html>
