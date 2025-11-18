@@ -97,20 +97,20 @@ func (p *page) toggleMenu(ctx app.Context, e app.Event) {
 			app.Window().Get("console").Call("log", "Menu styles set with !important")
 
 			// READ BACK the inline style to verify it stuck
-			actualDisplay := style.Call("getPropertyValue", "display")
-			actualBg := style.Call("getPropertyValue", "background")
-			actualZIndex := style.Call("getPropertyValue", "z-index")
+			//actualDisplay := style.Call("getPropertyValue", "display")
+			//actualBg := style.Call("getPropertyValue", "background")
+			//actualZIndex := style.Call("getPropertyValue", "z-index")
 
-			app.Window().Get("console").Call("log", "Readback - display:", actualDisplay)
-			app.Window().Get("console").Call("log", "Readback - background:", actualBg)
-			app.Window().Get("console").Call("log", "Readback - z-index:", actualZIndex)
+			//app.Window().Get("console").Call("log", "Readback - display:", actualDisplay)
+			//app.Window().Get("console").Call("log", "Readback - background:", actualBg)
+			//app.Window().Get("console").Call("log", "Readback - z-index:", actualZIndex)
 
 			// Also check the element's bounding box
-			rect := menu.Call("getBoundingClientRect")
-			app.Window().Get("console").Call("log", "Menu rect - top:", rect.Get("top"))
-			app.Window().Get("console").Call("log", "Menu rect - left:", rect.Get("left"))
-			app.Window().Get("console").Call("log", "Menu rect - width:", rect.Get("width"))
-			app.Window().Get("console").Call("log", "Menu rect - height:", rect.Get("height"))
+			//rect := menu.Call("getBoundingClientRect")
+			//app.Window().Get("console").Call("log", "Menu rect - top:", rect.Get("top"))
+			//app.Window().Get("console").Call("log", "Menu rect - left:", rect.Get("left"))
+			//app.Window().Get("console").Call("log", "Menu rect - width:", rect.Get("width"))
+			//app.Window().Get("console").Call("log", "Menu rect - height:", rect.Get("height"))
 		}
 	}
 }

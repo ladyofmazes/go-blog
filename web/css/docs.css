@@ -724,11 +724,11 @@ strong {
 // Hamburger Menu
 ------------------------------------------------------------------------------*/
 
-/* Hamburger button - hide on desktop, show on mobile */
-/*.hamburger-button {
+.hamburger-button {
   display: none;
-}*/
+}
 
+/* Hamburger button*/
 .hamburger-button svg {
   width: 24px;
   height: 24px;
@@ -742,8 +742,8 @@ strong {
     display: block !important;
     cursor: pointer;
     padding: 12px;
-    color: white;
-    background: red;
+    color: black;
+    background: white;
     /* Make it obvious */
     position: fixed;
     top: 10px;
