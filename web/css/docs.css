@@ -742,7 +742,7 @@ strong {
     display: block !important;
     cursor: pointer;
     padding: 12px;
-    color: black;
+    color: rgba(255, 255, 255, 0.2);
     background: white;
     /* Make it obvious */
     position: fixed;
