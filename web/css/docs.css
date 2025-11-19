@@ -742,8 +742,8 @@ strong {
     display: block !important;
     cursor: pointer;
     padding: 12px;
-    color: rgba(255, 255, 255, 0.2);
-    background: white;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
     /* Make it obvious */
     position: fixed;
     top: 10px;
