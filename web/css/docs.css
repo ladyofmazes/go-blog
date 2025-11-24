@@ -724,7 +724,7 @@ strong {
 // Hamburger Menu
 ------------------------------------------------------------------------------*/
 
-.hamburger-button {
+.menu {
   display: none;
 }
 
@@ -737,7 +737,7 @@ strong {
 
 @media (max-width: 768px) {
 
-/* Hamburger button - ALWAYS VISIBLE FOR TESTING */
+/* Hamburger button - ALWAYS VISIBLE */
   .hamburger-button {
     display: block !important;
     cursor: pointer;

@@ -209,7 +209,7 @@ func (p *page) Render() app.UI {
 		shellClass = app.AppendClass(shellClass, "test-menu-is-open") // Extra debug class
 	}
 	return ui.Shell().
-		Class(shellClass). // Add class when open
+		Class(shellClass).
 		Menu(
 			newMenu().Class("fill"),
 		).
@@ -248,7 +248,6 @@ func (p *page) Render() app.UI {
 								Left().
 								Middle().
 								Content(
-									// Manual hamburger button - REPLACE THIS ENTIRE SECTION
 									app.Raw(`
                                         <div class="hamburger-button" onclick="window.toggleMenu()">
                                             <svg viewBox="0 0 24 24" width="24" height="24">
@@ -274,7 +273,7 @@ func (p *page) Render() app.UI {
 								),
 						),
 				).
-				HeaderHeight(headerHeight).
+				HeaderHeight(headerHeight + 20).
 				Content(
 					app.Main().Body(
 						app.Article().Body(
