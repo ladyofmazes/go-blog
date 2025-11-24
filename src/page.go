@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	headerHeight  = 72
+	headerHeight  = 142
 	adsenseClient = "ca-pub-1013306768105236"
 	adsenseSlot   = "9307554044"
 )
@@ -255,25 +255,10 @@ func (p *page) Render() app.UI {
                                             </svg>
                                         </div>
                                     `),
-
-									app.If(p.updateAvailable, func() app.UI {
-										return app.Div().
-											Class("link-update").
-											Body(
-												ui.Link().
-													Class("link").
-													Class("heading").
-													Class("fit").
-													Class("unselectable").
-													Icon(downloadSVG).
-													Label("Update").
-													OnClick(p.updateApp),
-											)
-									}),
 								),
 						),
 				).
-				HeaderHeight(headerHeight + 20).
+				HeaderHeight(headerHeight).
 				Content(
 					app.Main().Body(
 						app.Article().Body(
