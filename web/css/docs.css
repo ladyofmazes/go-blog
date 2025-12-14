@@ -732,6 +732,8 @@ strong {
 .hamburger-button svg {
   width: 24px;
   height: 24px;
+  color: black;
+  background: rgb(146, 173, 146);
   display: block;
 }
 
@@ -742,8 +744,8 @@ strong {
     display: block !important;
     cursor: pointer;
     padding: 12px;
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
+    color: black;
+    background: rgb(146, 173, 146);
     /* Make it obvious */
     position: fixed;
     top: 10px;
