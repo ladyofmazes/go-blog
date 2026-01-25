@@ -98,6 +98,11 @@ func (m *menu) Render() app.UI {
 					Icon(keyboardSVG).
 					Label("Hackrooms").
 					Href("https://hackrooms.pages.dev/"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("That Time I Gave a Dog a Cookie and Then I Did It 11 More Times and Was Transported to Another World").
+					Href("https://d3oihvicyx8mfd.cloudfront.net/"),
 				app.Div().Class("separator"),
 
 				app.If(m.appInstallable, func() app.UI {
@@ -111,7 +116,7 @@ func (m *menu) Render() app.UI {
 					Class(linkClass).
 					Icon(userLockSVG).
 					Label("Resume").
-					Href("http://mamday-resume.s3-website.us-east-2.amazonaws.com/"),
+					Href("https://d3aobyces4igtg.cloudfront.net/"),
 
 				app.Div().Class("separator"),
 			),
