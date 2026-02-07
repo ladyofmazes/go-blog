@@ -103,6 +103,11 @@ func (m *menu) Render() app.UI {
 					Icon(keyboardSVG).
 					Label("That Time I Gave a Dog a Cookie and Then I Did It 11 More Times and Was Transported to Another World").
 					Href("https://d3oihvicyx8mfd.cloudfront.net/"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Score").
+					Href("https://script.google.com/macros/s/AKfycbzYt_aXBdQlnMM7idlVDiOihiUQC9l9VsmuA3Qg-AI6PPpExvXWbhVL66lMjvC-vpY/exec"),
 				app.Div().Class("separator"),
 
 				app.If(m.appInstallable, func() app.UI {
