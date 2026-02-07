@@ -108,6 +108,11 @@ func (m *menu) Render() app.UI {
 					Icon(keyboardSVG).
 					Label("Score").
 					Href("https://script.google.com/macros/s/AKfycbzYt_aXBdQlnMM7idlVDiOihiUQC9l9VsmuA3Qg-AI6PPpExvXWbhVL66lMjvC-vpY/exec"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Clickr").
+					Href("https://clickr.melamday.workers.dev/"),
 				app.Div().Class("separator"),
 
 				app.If(m.appInstallable, func() app.UI {
