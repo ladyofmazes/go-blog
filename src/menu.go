@@ -114,14 +114,6 @@ func (m *menu) Render() app.UI {
 					Label("Clickr").
 					Href("https://clickr.melamday.workers.dev/"),
 				app.Div().Class("separator"),
-
-				app.If(m.appInstallable, func() app.UI {
-					return ui.Link().
-						Class(linkClass).
-						Icon(downloadSVG).
-						Label("Install").
-						OnClick(m.installApp)
-				}),
 				ui.Link().
 					Class(linkClass).
 					Icon(userLockSVG).
