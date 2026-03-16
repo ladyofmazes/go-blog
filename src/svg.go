@@ -99,4 +99,65 @@ const (
 	bellSVG = `<svg style="width:%vpx;height:%vpx" viewBox="0 0 24 24">
     	<path fill="currentColor" d="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" />
 	</svg>`
+	leftRobot = `<svg data-animation-duration="15s" viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /*  */
+      .svg-01-a-rect {
+        stroke-width: 2;
+        stroke: black;
+        fill: #abc;
+      }
+      
+      .svg-01-a-inner-group:nth-child(even) .svg-01-a-rect {
+        transform-origin: 0 0;
+        animation: svg-01-a-rect 1s linear infinite;
+      }
+      
+      .svg-01-a-inner-group:nth-child(odd) .svg-01-a-rect {
+        transform-origin: 0 0;
+        animation: svg-01-a-rect 1s linear infinite;
+      }
+      
+      @keyframes svg-01-a-rect {
+        to {
+          transform: rotate(0deg);
+        }
+      
+        from {
+          transform: rotate(45deg);
+        }
+      }
+      
+    /*  */
+  </style>
+  <g class="svg-01-a-g svg-01-a-outer-group">
+    <g class="svg-01-a-g svg-01-a-inner-group" transform="rotate(270) translate(0 18.75)">
+      <rect class="svg-01-a-rect" height="2" width="25" x="-12.5" y="-1.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group" transform="rotate(270) translate(0 18.75)">
+      <rect class="svg-01-a-rect" height="25" width="5" x="12.5" y="1"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group" transform="rotate(90) translate(0 18.75)">
+      <rect class="svg-01-a-rect" height="25" width="5" x="-20.5" y="-.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group" transform="rotate(90) translate(0 18.75)">
+      <rect class="svg-01-a-rect" height="5" width="25" x="-20.5" y="-.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group" transform="rotate(180) translate(0 18.75)">
+      <rect class="svg-01-a-rect" height="25" width="25" x="-16.5" y="-18.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group" transform="rotate(0) translate(0 18.75)">
+      <rect class="svg-01-a-rect" height="100" width="25" x="-25.5" y="-12.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group">
+      <rect class="svg-01-a-rect" height="5" width="5" x="-12.5" y="-25.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group">
+      <rect class="svg-01-a-rect" height="5" width="5" x="-1.5" y="-22.5"></rect>
+    </g>
+    <g class="svg-01-a-g svg-01-a-inner-group">
+      <rect class="svg-01-a-rect" height="5" width="10" x="-6.5" y="-14.5"></rect>
+    </g>
+  </g>
+</svg>`
 )

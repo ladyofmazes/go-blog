@@ -22,7 +22,7 @@ var entry2Content string
 func (h *intro) Render() app.UI {
 	return newPage().
 		Title("Building a Blog with Go-App").
-		Icon(rocketSVG).
+		Icon(leftRobot).
 		Index(
 			newIndexLink().Title("Intro").Href("/intro"),
 			app.Div().Class("separator"),
