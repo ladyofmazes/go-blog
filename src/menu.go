@@ -113,6 +113,11 @@ func (m *menu) Render() app.UI {
 					Icon(keyboardSVG).
 					Label("Clickr").
 					Href("https://clickr.melamday.workers.dev/"),
+				ui.Link().
+					Class(linkClass).
+					Icon(keyboardSVG).
+					Label("Boxr").
+					Href("https://boxr.pages.dev/"),
 				app.Div().Class("separator"),
 				ui.Link().
 					Class(linkClass).
