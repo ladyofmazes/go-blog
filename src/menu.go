@@ -102,7 +102,7 @@ func (m *menu) Render() app.UI {
 					Class(linkClass).
 					Icon(keyboardSVG).
 					Label("That Time I Gave a Dog a Cookie and Then I Did It 11 More Times and Was Transported to Another World").
-					Href("https://d3oihvicyx8mfd.cloudfront.net/"),
+					Href("https://that-time-i-gave-a-dog-a-cookie.pages.dev"),
 				ui.Link().
 					Class(linkClass).
 					Icon(keyboardSVG).
