@@ -77,6 +77,11 @@ func (m *menu) Render() app.UI {
 					Label("Intro").
 					Href("/intro").
 					Class(isFocus("/intro")),
+				ui.Link().
+					Class(linkClass).
+					Icon(imgFolderSVG).
+					Label("My MSLIS").
+					Href("https://my-mslis.pages.dev"),
 				app.Div().Class("separator"),
 				ui.Link().
 					Class(linkClass).
